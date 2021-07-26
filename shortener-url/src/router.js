@@ -7,9 +7,7 @@ const short_id = require('shortid')
 const baseUrl = 'http://localhost:3000'
 
 router.post('/shorten', async (req, res) => {
-
     const { urlRec } = req.body
-
     try{
         //verifica se a url base é valida
         const isValid = validUrl.isUri(baseUrl)
@@ -17,9 +15,9 @@ router.post('/shorten', async (req, res) => {
          return res.send({
             error: "Invalid base URL"
         })
-
+        
         const urlCode = short_id.generate()
-
+        
         //verifica se a url recebida é inválida - caso seja retorna erro
         if (!validUrl.isUri(urlRec))
          return res.send({
@@ -36,11 +34,9 @@ router.post('/shorten', async (req, res) => {
             })
             await url.save()
             res.send({ url })
-
         }else{
             return res.send({ url })
         }
-
     }catch(err){
         console.log(err)
         return res.status(400).send({
@@ -50,9 +46,7 @@ router.post('/shorten', async (req, res) => {
 })
 
 router.get('/:code', async (req, res) => {
-
     const { code } = req.params
-
     try{
         const url = await urlModel.findOne({ urlCode: code })
         if(!url)
@@ -60,7 +54,6 @@ router.get('/:code', async (req, res) => {
              error: 'URL not found'
          })
         return res.redirect(url.urlRec)
-
     }catch(err){
         console.log(err)
         return res.status(400).send({
