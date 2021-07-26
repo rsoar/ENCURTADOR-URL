@@ -12,7 +12,7 @@ mongoose.connect(process.env.CONNECTIONBD, {
     app.emit('ok')
 }).catch(err => {
     console.log(err)
-    return console.log('connection with database failed')
+    return console.log('database connection failed')
 })
 
 app.use(express.json())
